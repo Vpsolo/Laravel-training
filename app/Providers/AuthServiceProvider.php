@@ -38,7 +38,7 @@ class AuthServiceProvider extends ServiceProvider
 
             // if ($user->roles->contains('name', 'Admin')) return true;
 
-            return false;
+            return false; 
         });
 
         $gate->define('update-article', function(User $user, $article){
