@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Article;
+use App\User;
 use Auth;
 use Gate;
 
@@ -43,8 +44,12 @@ class AdminUpdatePostController extends Controller
 
         $article = Article::find($data['id']);
 
+        // $this->authorize('update', $article);
+        $this->authorizeForUser($user, 'update', $article);
+
         // if(Gate::forUser(6)->allows('update-article', $article)){
-        if(Gate::allows('update-article', $article)){
+        // if(Gate::allows('update', $article)){
+        // if($request->user()->can('update', $article)){
             $article->name = $data['name'];
             $article->img = $data['img'];
             $article->text = $data['text'];
@@ -52,7 +57,7 @@ class AdminUpdatePostController extends Controller
             $res = $user->articles()->save($article);
 
             return redirect()->back()->with('message','Материал обновлен');
-        }
+        // }
 
         return redirect()->back()->with('message','У вас нет прав');
     }

@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 use Gate;
 use Auth;
+use App\User;
+use App\Article;
 
 class AdminPostController extends Controller
 {
@@ -31,9 +33,16 @@ class AdminPostController extends Controller
     }
 
     public function create(Request $request){
-        if(Gate::denies('add-article')){
-            return redirect()->back()->with('message','У вас нет прав');
+        $article = new Article;  
+
+        // if(Gate::denies('add', $article)){
+        //     return redirect()->back()->with('message','У вас нет прав');
+        // }
+
+        if($request->user()->cannot('add', $article)){
+          return redirect()->back()->with('message','У вас нет прав');
         }
+
 
         $this->validate($request, [
             'name'=>'required'
@@ -41,7 +50,7 @@ class AdminPostController extends Controller
 
         $user = Auth::user();
         $data = $request->all();
-        
+
         $res = $user->articles()->create([
             'name'=>$data['name'],
             'img'=>$data['img'],
