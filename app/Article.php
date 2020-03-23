@@ -12,7 +12,7 @@ class Article extends Model
     // public $incrementing = TRUE;
     // public $timestamps = TRUE; 
 
-    protected $fillable = ['name','text'];
+    protected $fillable = ['name','text','img'];
     // protected $guarded = ['name'];
     
     // Можно заранне определить типы данных для полей модели
