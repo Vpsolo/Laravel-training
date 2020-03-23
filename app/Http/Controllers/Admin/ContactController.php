@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use Validator;
 use App\Http\Requests\ContactRequest;
+use Session;
 
 class ContactController extends Controller
 {
@@ -127,7 +128,84 @@ class ContactController extends Controller
     // 26 lesson end
 
     // 27 lesson
-    public function store(Request $request, $id=false) {
+    // public function store(Request $request, $id=false) {
+    //     $array = array(
+    //         'title'=>'Laravel Project',
+    //         'data'=>[
+    //             'one'=>'List 1',
+    //             'two'=>'List 2',
+    //             'three'=>'List 3',
+    //             'four'=>'List 4',
+    //             'five'=>'List 5'
+    //         ],
+    //         'dataI'=>['List 1','List 2','List 3','List 4','List 5'],
+    //         'bvar'=>true,
+    //         'script'=>'<script>alert("hello")</script>'
+    //     );
+
+    //     if($request->isMethod('post')){
+    //         $message = [
+    //             'name.required'=>'ПОЛЕ :attribute обязательно к заполнению',
+    //             'email.max'=>'maxxxxsimum'
+    //         ];
+    //         $validator = Validator::make($request->all(), [
+    //             'name'=>'required',
+    //             // 'email'=>'required'
+    //         ], $message);
+
+    //         $validator->sometimes('email','required',function($input){
+    //             return strlen($input->name) >= 10;
+    //         });
+
+    //         // $validator->after(function($validator){
+    //         //     $validator->errors()->add('name','дополнительное сообщение');
+    //         // });
+
+    //         if($validator->fails()){
+    //             $messages = $validator->errors();
+
+    //             // dump($validator->failed());
+                
+    //             // $messages->get('name');
+    //             // $messages->first('name');
+    //             // $messages->has('name');
+    //             // $messages->all('<p> :message </p>');
+
+    //             return redirect()->route('contact')->withErrors($validator)->withInput();
+    //         }
+    //     }
+
+    //     // $this->validate($request, $rules);
+    //     // dump($request->all());
+    //     // $validator->errors()->all();
+
+    //     return view('layout.contact', $array);
+    // }
+
+    // public function show() {
+    //     $array = array(
+    //         'title'=>'Laravel Project',
+    //         'data'=>[
+    //             'one'=>'List 1',
+    //             'two'=>'List 2',
+    //             'three'=>'List 3',
+    //             'four'=>'List 4',
+    //             'five'=>'List 5'
+    //         ],
+    //         'dataI'=>['List 1','List 2','List 3','List 4','List 5'],
+    //         'bvar'=>true,
+    //         'script'=>'<script>alert("hello")</script>'
+    //     );
+
+    //     return view('layout.contact', $array);
+    // }
+
+
+
+
+
+      // lesson 33
+      public function store(Request $request, $id=false) {
         $array = array(
             'title'=>'Laravel Project',
             'data'=>[
@@ -141,6 +219,8 @@ class ContactController extends Controller
             'bvar'=>true,
             'script'=>'<script>alert("hello")</script>'
         );
+
+        $request->session()->get('key','default');
 
         if($request->isMethod('post')){
             $message = [
@@ -181,7 +261,7 @@ class ContactController extends Controller
         return view('layout.contact', $array);
     }
 
-    public function show() {
+    public function show(Request $request) {
         $array = array(
             'title'=>'Laravel Project',
             'data'=>[
@@ -195,6 +275,24 @@ class ContactController extends Controller
             'bvar'=>true,
             'script'=>'<script>alert("hello")</script>'
         );
+
+        // INSERT AND SELECT SESSION
+        // $result = $request->session()->get('key', 'default');
+        // $result = $request->session()->put('key.first','value'); // создается многоуровневая сессия
+        // $result = $request->session()->push('key.second','value'); 
+        // Session::push('key.second','value'); 
+        // session(['key2'=>'value']); 
+        // session('key5''default'); 
+
+        // $result = $request->session()->all();
+        // $result = $request->session()->has('key');
+
+        //DELETE SESSION
+        // Session::forget('key2');
+        // Session::flush(); // Очистка сессий
+        // Session::pull('key'); // Получает значение сессии и после её удаляет
+        // Session::flash('message', 'value'); // Создает сессию только на один запрос
+        // Session::reflash(); // Продливает значение сесси заданной с помощью flash()
 
         return view('layout.contact', $array);
     }
