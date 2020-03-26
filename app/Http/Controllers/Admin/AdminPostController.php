@@ -12,6 +12,9 @@ use Auth;
 use App\User;
 use App\Article;
 
+use Event;
+use App\Events\onAddArticleEvent; 
+
 class AdminPostController extends Controller
 {
     public function show(){
@@ -56,6 +59,8 @@ class AdminPostController extends Controller
             'img'=>$data['img'],
             'text'=>$data['text']
         ]);
+
+        Event::fire(new onAddArticleEvent($res, $user));
 
         return redirect()->back()->with('message','Материал добавлен');
     }
