@@ -20,6 +20,10 @@
       </div>
     @endif 
 
+    <div class="alert alert-success">
+      {{ dump(Session::all()) }}
+    </div>
+
     <form method="POST" action="{{ route('contact') }}">
       {{ csrf_field() }}
       <div class="form-group">
