@@ -11,6 +11,8 @@ use Validator;
 use App\Http\Requests\ContactRequest;
 use Session;
 
+use Lang;
+
 class ContactController extends Controller
 {
     // public function show(Request $request, $id=false) {
@@ -293,6 +295,14 @@ class ContactController extends Controller
         // Session::pull('key'); // Получает значение сессии и после её удаляет
         // Session::flash('message', 'value'); // Создает сессию только на один запрос
         // Session::reflash(); // Продливает значение сесси заданной с помощью flash()
+
+        // Lang configuration
+        // $array['title'] = Lang::get('messages.welcome');
+        // $array['title'] = Lang::get('messages.hello', array('name'=>'Иван'));
+        // $array['title'] = Lang::choice('messages.apple', 1);
+        // $array['title'] = Lang::choice('messages.apples', 21);
+        
+        // if(Lang::has('messages.apples')){}
 
         return view('layout.contact', $array);
     }
