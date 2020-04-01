@@ -93,6 +93,11 @@ Route::get('/article/{id}', ['as'=>'article','uses'=>'Admin\Core@getArticle']);
 Route::get('/contact', ['middleware'=>['auth'],'uses'=>'Admin\ContactController@show','as'=>'contact']); 
 Route::post('/contact', ['uses'=>'Admin\ContactController@store']); 
 
+// lesson 36,37
+Route::get('/contact', ['middleware'=>['auth'],'uses'=>'Admin\ContactController@show','as'=>'contact']); 
+Route::post('/contact', ['middleware'=>['auth'],'uses'=>'Admin\ContactController@store']); 
+// lesson 36,37
+
 // Route::group(['middleware'=>['web']], function(){
 //     Route::auth();
 //     Route::get('/home', 'HomeController@index');
