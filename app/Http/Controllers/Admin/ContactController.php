@@ -14,6 +14,8 @@ use Lang;
 use App\Helpers\Contracts\SaveStr;
 use Auth;
 
+use App;
+
 class ContactController extends Controller {
   // public function show(Request $request, $id=false) {
   //     $array = array(
@@ -308,8 +310,36 @@ class ContactController extends Controller {
   // }
 
   //lesson 36,37
+  // public function store(Request $request, SaveStr $saveStr, $id=false) {
+  //   $saveStr->save($request,Auth::user());
+    
+  //   return redirect()->route('contact');
+  // }
+
+  // public function show(Request $request) {
+  //   $array=array('title'=>'Laravel Project',
+  //     'data'=>[ 'one'=>'List 1',
+  //     'two'=>'List 2',
+  //     'three'=>'List 3',
+  //     'four'=>'List 4',
+  //     'five'=>'List 5'
+  //     ],
+  //     'dataI'=>['List 1', 'List 2', 'List 3', 'List 4', 'List 5'],
+  //     'bvar'=>true,
+  //     'script'=>'<script>alert("hello")</script>'
+  //   );
+
+  //   return view('layout.contact', $array);
+  // }
+
+  // lesson 38
   public function store(Request $request, SaveStr $saveStr, $id=false) {
+  // public function store(Request $request, $id=false) {
+    // $var = new SomeClass();
+    // $var = App::make('SaveStr');
+
     $saveStr->save($request,Auth::user());
+    // $var->save($request,Auth::user());
     
     return redirect()->route('contact');
   }
