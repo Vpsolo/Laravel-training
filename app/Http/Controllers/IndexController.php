@@ -11,6 +11,8 @@ use App\Service;
 use App\Portfolio;
 use App\People;
 
+use DB;
+
 class IndexController extends Controller
 {
     public function execute(Request $request){
@@ -19,8 +21,9 @@ class IndexController extends Controller
       $services = Service::where('id','<',20)->get(); 
       $people = People::take(3)->get();
 
-      $menu = array();
+      $tags = DB::table('portfolios')->distinct()->lists('filter'); // >lists() переименовали в ->pluck() в версиях >5.2
 
+      $menu = array();
       foreach($pages as $page){
         $item = array('title'=>$page->name,'alias'=>$page->alias);
         array_push($menu,$item);
@@ -40,7 +43,8 @@ class IndexController extends Controller
         'pages'=>$pages,
         'services'=>$services,
         'portfolios'=>$portfolios,
-        'peoples'=>$people
+        'peoples'=>$people,
+        'tags'=>$tags
       ));
     }
 }
