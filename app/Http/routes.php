@@ -20,7 +20,10 @@ Route::group([],function(){
 
 Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
   Route::get('/',function(){
-
+    if(view()->exists('admin.index')){
+      $data = ['title'=>'Панель администратора'];
+      return view('admin.index',$data);
+    }
   });
 
   Route::group(['prefix'=>'pages'],function(){
@@ -36,9 +39,12 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
   });
 
   Route::group(['prefix'=>'services'],function(){
-    Route::get('/',['uses'=>'ServiceController@execute','as'=>'pages']);
+    Route::get('/',['uses'=>'ServiceController@execute','as'=>'services']);
     Route::match(['get','post'],'/add',['uses'=>'ServiceAddController@execute','as'=>'serviceAdd']);
     Route::match(['get','post','delete'],'/edit/{page}',['uses'=>'ServiceEditController@execute','as'=>'serviceEdit']);
   });
 
 });
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
