@@ -15,11 +15,32 @@ class IndexController extends Controller
 {
     public function execute(Request $request){
       $pages = Page::all(); 
-      // $portfolio = Portfolio::all(); 
-      $portfolio = Portfolio::get(array('name','filter','images')); 
+      $portfolios = Portfolio::get(array('name','filter','images')); 
       $services = Service::where('id','<',20)->get(); 
       $people = People::take(3)->get();
 
-      return view('site.index');
+      $menu = array();
+
+      foreach($pages as $page){
+        $item = array('title'=>$page->name,'alias'=>$page->alias);
+        array_push($menu,$item);
+      }
+
+      $item = array('title'=>'Services','alias'=>'service');
+      array_push($menu,$item);
+      $item = array('title'=>'Portfolio','alias'=>'portfolio');
+      array_push($menu,$item);
+      $item = array('title'=>'Team','alias'=>'team');
+      array_push($menu,$item);
+      $item = array('title'=>'Contact','alias'=>'contact');
+      array_push($menu,$item);
+
+      return view('site.index',array(
+        'menu'=>$menu,
+        'pages'=>$pages,
+        'services'=>$services,
+        'portfolios'=>$portfolios,
+        'peoples'=>$people
+      ));
     }
 }
