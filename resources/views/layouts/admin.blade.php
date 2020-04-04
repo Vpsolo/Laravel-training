@@ -19,7 +19,7 @@
     <script type="text/javascript" src="{{asset('public/assets/js/ckeditor/ckeditor.js')}}"></script>
     <script type="text/javascript" src="{{asset('public/assets/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('public/assets/js/bootstrap-filestyle.min.js')}}"></script>
-
+ 
 </head>
 <body>
 
