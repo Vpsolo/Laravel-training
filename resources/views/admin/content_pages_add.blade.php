@@ -1,6 +1,8 @@
 <div class="wrapper container-fluid">
   {!! Form::open(['url'=>route('pagesAdd'),'class'=>'form-horizontal','method'=>'POST','enctype'=>'multipart/form-data']) !!}
 
+  {!! csrf_field() !!}
+
   <div class="form-group">
     {!! Form::label('name','Название',['class'=>'col-xs-2 control-label']) !!}
     <div class="col-xs-8">
