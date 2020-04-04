@@ -8,11 +8,42 @@ use App\Http\Requests;
 
 use App\Page;
 
+use Validator;
+
 class PagesEditController extends Controller
 {
   // При передаче индентификатора(id) можно записывать как показоно ниже, тогда ларавел сам будет искать из БД подходящую запись по id 
   public function execute(Page $page, Request $request){
     // $page = Page::find($id);
+    if($request->isMethod('post')){
+      $input = $request->except('_token');
+
+      $validator = Validator::make($input,[
+        'name'=>'required|max:255',
+        'alias'=>'required|max:255|unique:pages,alias,'.$input['id'],
+        // unique:таблица,столбец,индентификатор строки который должен игнорироваться
+        'text'=>'required',
+      ]);
+            
+      if($validator->fails()){
+        return redirect()->route('pagesEdit',['page'=>$input['id']])->withErrors($validator);
+      }
+
+      if($request->hasFile('images')){
+        $file = $request->file('images');
+        $file->move(public_path().'/assets/img',$file->getClientOriginalName());
+        $input['images'] = $file->getClientOriginalName();
+      }else{
+        $input['images'] = $input['old_images'];
+      }
+      unset($input['old_images']);
+
+      $page->fill($input);
+      if($page->update()){
+        return redirect('admin')->with('status','Страница обновлена');
+      }
+    }
+   
     $old = $page->toArray();
     if(view()->exists('admin.pages_edit')){
       $data = [
@@ -21,6 +52,5 @@ class PagesEditController extends Controller
       ];
       return view('admin.pages_edit',$data);
     }
-    dd($old);
   }
 }
