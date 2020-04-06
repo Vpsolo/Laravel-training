@@ -11,10 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/', 'IndexController',['only'=>['index'],'names'=>['index'=>'home']]);
 
-Route::auth();
 
-Route::get('/home', 'HomeController@index');
+// Route::auth();
+// Route::get('/home', 'HomeController@index');
