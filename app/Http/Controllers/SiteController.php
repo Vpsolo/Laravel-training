@@ -38,8 +38,8 @@ class SiteController extends Controller
     return view($this->template)->with($this->vars);
   }
 
-  protected function getMenu(){
-    $menu = $this->m_rep->get();
+  protected function getMenu(){ 
+    $menu = $this->m_rep->get()->sortBy('parent');;
 
     $mBuilder = Menu::make('MyNav',function($m) use ($menu){
       foreach($menu as $item){
