@@ -19,5 +19,11 @@ Route::resource('/portfolios','PortfolioController',[
   ]
 ]);
 
+Route::resource('/articles','ArticlesController',[
+  'parameters' => [
+    'articles' => 'alias',
+  ]
+]);
+
 // Route::auth();
 // Route::get('/home', 'HomeController@index');
