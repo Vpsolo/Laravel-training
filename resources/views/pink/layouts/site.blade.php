@@ -26,7 +26,10 @@
   <!-- this line will appear only if the website is visited with an iPad -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.2, user-scalable=yes" />
 
-  <title>Pink Rio | A strong, powerful and multiporpose WordPress Theme</title>
+  <meta name="description" content="{{ isset($meta_desc) ? $meta_desc : '' }}" />
+  <meta name="keywords" content="{{ isset($keywords) ? $keywords : '' }}" />
+
+  <title>{{ $title or 'Pink' }}</title>
 
   <!-- [favicon] begin -->
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/'.env('THEME')) }}/images/favicon.ico" />
@@ -148,7 +151,7 @@
 
 
       <!-- START PRIMARY -->
-      <div id="primary" class="sidebar-right">
+      <div id="primary" class="sidebar-{{ isset($bar) ? $bar : 'no' }}">
         <div class="inner group">
           <!-- START CONTENT -->
           @yield('content')
@@ -163,26 +166,7 @@
       <!-- END PRIMARY -->
 
       <!-- START COPYRIGHT -->
-      <div id="copyright">
-        <div class="inner group">
-          <div class="left">
-            <a href="{{ asset('public/'.env('THEME')) }}/http://yithemes.com/?ddownload=2046&ap_id=pinkrio-html"><strong>Download
-                the free version for Wordpress</strong></a>
-          </div>
-          <div class="right">
-            <a href="{{ asset('public/'.env('THEME')) }}/#" class="socials-small facebook-small"
-              title="Facebook">facebook</a>
-            <a href="{{ asset('public/'.env('THEME')) }}/#" class="socials-small rss-small" title="Rss">rss</a>
-            <a href="{{ asset('public/'.env('THEME')) }}/#" class="socials-small twitter-small"
-              title="Twitter">twitter</a>
-            <a href="{{ asset('public/'.env('THEME')) }}/#" class="socials-small flickr-small" title="Flickr">flickr</a>
-            <a href="{{ asset('public/'.env('THEME')) }}/#" class="socials-small skype-small" title="Skype">skype</a>
-            <a href="{{ asset('public/'.env('THEME')) }}/#" class="socials-small google-small" title="Google">google</a>
-            <a href="{{ asset('public/'.env('THEME')) }}/#" class="socials-small pinterest-small"
-              title="Pinterest">pinterest</a>
-          </div>
-        </div>
-      </div>
+       @yield('footer')
       <!-- END COPYRIGHT -->
     </div>
     <!-- END WRAPPER -->
