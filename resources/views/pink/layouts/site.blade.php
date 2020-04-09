@@ -104,7 +104,7 @@
 
 <!-- START BODY -->
 
-<body class="no_js responsive page-template-home-php stretched">
+<body class="no_js responsive {{ Route::currentRouteName() == 'home' ? 'page-template-home-php' : ''}} stretched">
 
   <!-- START BG SHADOW -->
   <div class="bg-shadow">
