@@ -7,9 +7,9 @@ jQuery(document).ready(function($){
   $('#commentform').on('click', '#submit', function(e){
     e.preventDefault();
 
-    // let comParent = $(this);
+    let comParent = $(this);
 
-    $('.wrap_result').css('color','green').text('Сохранение комментария').fadeIn(500,function(){
+    $('.wrap_result').css('color','green').text('Сохранение комментария...').fadeIn(500,function(){
       let data = $('#commentform').serializeArray();
       
       $.ajax({
@@ -19,7 +19,16 @@ jQuery(document).ready(function($){
         type: 'POST',
         datatype: 'JSON',
         success: function(data){
-          console.log(data);
+          if(data.error){
+
+          }else if(data.success){
+            $('.wrap_result').append('<br><strong>Сохранено!</strong>').delay(1000).fadeOut(500,function(){
+              if(data.data.parent_id > 0){
+                comParent.parents('div#respond').prev().after('<ul class="children">' + data.comment + '</ul>');
+              }
+              $('#cancel-comment-reply-link').click();
+            });
+          }
         },
         error: function(data){
           // console.log(data);
