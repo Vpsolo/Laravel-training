@@ -54,10 +54,9 @@
       <span>{{ count($article->comments) ? count($article->comments) : '0' }}</span> {{ Lang::choice('ru.comments',count($article->comments)) }}
     </h3>
 
-    @if (count($article->comments) > 0)
-    @set($com,$article->comments->groupBy('parent_id'))
-
     <ol class="commentlist group">
+    @if (count($article->comments) > 0)
+      @set($com,$article->comments->groupBy('parent_id'))
       @foreach ($com as $k=>$comments)
         @if ($k !== 0)
          @break
@@ -65,9 +64,8 @@
 
         @include(env('THEME').'.comment',['items'=>$comments])
       @endforeach
-    </ol>
-
     @endif
+    </ol>
 
     <!-- START TRACKBACK & PINGBACK -->
     <h2 id="trackbacks">Trackbacks and pingbacks</h2>
