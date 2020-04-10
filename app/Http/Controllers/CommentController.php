@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 use Corp\Http\Requests;
 
+use Validator;
+use Auth;
+use Corp\Comment; 
+use Corp\Article;
+
 class CommentController extends SiteController
 {
     /**
@@ -36,7 +41,35 @@ class CommentController extends SiteController
      */
     public function store(Request $request)
     {
-      echo json_encode(['hello'=>'world']);
+      $data = $request->except('_token','comment_post_id','comment_parent');
+      $data['article_id'] = $request->input('comment_post_id');
+      $data['parent_id'] = $request->input('comment_parent');
+
+      $validator = Validator::make($data,[
+        'article_id' => 'integer|required',
+        'parent_id' => 'integer|required',
+        'text' => 'string|required'
+      ]);
+
+      // Если функция вернет TRUE тогда поля указанный в первом аргументе будут валидироваться по правилу второго аргумента, если же вернет FALSE то они валидироваться не будут  
+      $validator->sometimes(['name','email'],'required|max:255',function(){
+        return !Auth::check();
+      });
+
+      if($validator->fails()){
+        return \Response::json(['error'=>$validator->errors()->all()]);
+      }
+
+      $user = Auth::user();
+      $comment = new Comment($data);
+
+      if($user){
+        $comment->user_id = $user->id;
+      }
+
+      $post = Article::find($data['article_id']);
+      $post->comments()->save($comment);
+
       exit();
     }
 
