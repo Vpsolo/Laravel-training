@@ -7,5 +7,6 @@
     'read_more' => 'Читать далее',
     'recent_comments' => 3,
     'recent_portfolios' => 3,
+    'outher_portfolios' => 8,
   ];
 ?>
