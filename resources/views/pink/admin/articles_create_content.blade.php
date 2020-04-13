@@ -19,6 +19,28 @@
 
       <li class="text-field">
         <label for="name-contact-us">
+          <span class="label">Ключевые слова:</span>
+          <br />
+          <span class="sublabel">Заголовок материала</span><br />
+        </label>
+        <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span>
+          {!! Form::text('keywords',isset($article->title) ? $article->title : old('title'), ['placeholder'=>'Введите название страницы']) !!}
+        </div>
+      </li>
+
+      <li class="text-field">
+        <label for="name-contact-us">
+          <span class="label">Мета описание:</span>
+          <br />
+          <span class="sublabel">Заголовок материала</span><br />
+        </label>
+        <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span>
+          {!! Form::text('meta_desc',isset($article->title) ? $article->title : old('title'), ['placeholder'=>'Введите название страницы']) !!}
+        </div>
+      </li>
+
+      <li class="text-field">
+        <label for="name-contact-us">
           <span class="label">Псевдоним:</span>
           <br />
           <span class="sublabel">введите псевдоним</span><br />
