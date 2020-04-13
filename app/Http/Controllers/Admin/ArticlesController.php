@@ -7,8 +7,24 @@ use Illuminate\Http\Request;
 use Corp\Http\Requests;
 use Corp\Http\Controllers\Controller;
 
-class ArticlesController extends Controller
+use Corp\Repositories\ArticlesRepository;
+
+use Gate;
+
+class ArticlesController extends AdminController
 {
+  public function __construct(ArticlesRepository $a_rep){
+    parent::__construct();
+
+    if(Gate::denies('VIEW_ADMIN_ARTICLES')){
+      abort(403);
+    }
+
+    $this->a_rep = $a_rep;
+
+    $this->template = env('THEME').'.admin.articles';
+  }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +32,20 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        //
+      $this->title = 'Менеджер статей';
+
+      $articles = $this->getArticles();
+
+      $articles = $this->getArticles();
+      $content = view(env('THEME').'.admin.articles_content')->with('articles',$articles)->render();
+      $this->vars = array_add($this->vars,'content',$content); 
+
+
+      return $this->renderOutput();
+    }
+
+    public function getArticles(){
+      return $this->a_rep->get();
     }
 
     /**
