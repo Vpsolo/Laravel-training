@@ -81,7 +81,7 @@ class CommentController extends SiteController
 
       $view_comment = view(env('THEME').'.content_one_comment')->with('data',$data)->render();
       
-      return \Responce::json(['success'=>TRUE,'comment'=>$view_comment,'data'=>$data]);
+      return \Response::json(['success'=>TRUE,'comment'=>$view_comment,'data'=>$data]);
       exit();
     }
 
