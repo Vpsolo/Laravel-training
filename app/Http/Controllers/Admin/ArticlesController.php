@@ -15,6 +15,8 @@ use Corp\Category;
 
 use Corp\Http\Requests\ArticleRequest;
 
+use Corp\Article; 
+
 class ArticlesController extends AdminController
 {
   public function __construct(ArticlesRepository $a_rep){
@@ -115,9 +117,31 @@ class ArticlesController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    // Я переобределили поиск. Теперь ищет не по id, по столбцу alias
+    // Переобределил в Provider\RouteServiceProvider
+    public function edit(Article $article)
     {
-        //
+      if(Gate::denies('edit',new Article)){
+        abort(403);
+      }
+
+      $article->img = json_decode($article->img);
+
+      $categories = Category::select(['title','alias','parent_id','id'])->get();
+      $lists = array();
+      foreach($categories as $category){
+        if($category->parent_id == 0){
+          $lists[$category->title] = array();
+        }else{
+          $lists[$category->where('id',$category->parent_id)->first()->title][$category->id] = $category->title;
+        }
+      }
+      
+      $this->title = 'Редактирование материала - '.$article->title;
+
+      $this->content = view(env('THEME').'.admin.articles_create_content')->with(['categories'=>$lists,'article'=>$article])->render();
+      
+      return $this->renderOutput();
     }
 
     /**
