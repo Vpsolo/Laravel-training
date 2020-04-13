@@ -4,6 +4,8 @@ namespace Corp\Repositories;
 
 use Corp\Article;
 
+use Gate;
+
 class ArticlesRepository extends Repository {
   public function __construct(Article $articles){
     $this->model = $articles;
@@ -18,6 +20,23 @@ class ArticlesRepository extends Repository {
     }
     
     return $article;
+  }
+  
+  public function addArticle($request){
+    if(Gate::denies('save',$this->model)){
+      abort(403);
+    }
+
+    $data = $request->except('_token','image');
+    if(empty($data)){
+      return array('error'=>'Нет данных');
+    }
+
+    if(empty($data['alias'])){
+      $data['alias'] = $this->transliterate($data['title']);
+    }
+
+    dd($data);
   }
 }
 

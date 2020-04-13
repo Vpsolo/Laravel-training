@@ -13,6 +13,8 @@ use Gate;
 
 use Corp\Category;
 
+use Corp\Http\Requests\ArticleRequest;
+
 class ArticlesController extends AdminController
 {
   public function __construct(ArticlesRepository $a_rep){
@@ -85,9 +87,15 @@ class ArticlesController extends AdminController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
-        //
+      $result = $this->a_rep->addArticle($request);
+      
+      if(is_array($result) && !empty($result['error'])){
+        return back()->with($result);
+      }
+
+      return redirect('/admin')->with($result);
     }
 
     /**
