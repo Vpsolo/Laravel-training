@@ -15,6 +15,8 @@ use Gate;
 
 use Menu;
 
+use Corp\Http\Requests\MenusRequest;
+
 class MenusController extends AdminController
 {
   protected $m_rep;
@@ -94,9 +96,9 @@ class MenusController extends AdminController
         }
       }
       
-      $articles = $this->a_rep->get('id','title','alias');
-      $articles = $tmp->reduce(function($returnArticles, $article){
-        $returnArticles[$article->id] = $article->title;
+      $articles = $this->a_rep->get(['id','title','alias']);
+      $articles = $articles->reduce(function($returnArticles, $article){
+        $returnArticles[$article->alias] = $article->title;
         return $returnArticles; 
       },[]);
 
@@ -121,9 +123,15 @@ class MenusController extends AdminController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MenusRequest $request)
     {
-        //
+      $result = $this->m_rep->addMenu($request);
+      
+      if(is_array($result) && !empty($result['error'])){
+        return back()->with($result);
+      }
+
+      return redirect('/admin')->with($result);
     }
 
     /**

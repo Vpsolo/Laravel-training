@@ -33,7 +33,7 @@
     <h1>Тип меню:</h1>
 
       <div id="accordion">
-        <h3>{!! Form::radio('type', 'customLink',(isset($type) && $type == 'customLink') ? TRUE : FALSE,['class' => 'radioMenu']) !!} <span class="label">Пользовательская ссылка:</span>
+        <h3>{!! Form::radio('type', 'customLink',(!isset($type) || (isset($type) && $type == 'customLink')) ? TRUE : FALSE,['class' => 'radioMenu']) !!} <span class="label">Пользовательская ссылка:</span>
         </h3>
 
         <ul>
@@ -77,15 +77,12 @@
               <span class="sublabel">Ссылка на материал блога</span><br />
             </label>
             <div class="input-prepend">
-              {!! Form::select('article_alias', $articles, (isset($option) && $option) ? $option :FALSE, ['placeholder'
-              => 'Не используется']) !!}
+              {!! Form::select('article_alias', $articles, (isset($option) && $option) ? $option : FALSE, ['placeholder' => 'Не используется']) !!}
             </div>
           </li>
           <div style="clear: both;"></div>
 
         </ul>
-
-
 
         <h3>{!! Form::radio('type', 'portfolioLink',(isset($type) && $type == 'portfolioLink') ? TRUE : FALSE,['class' => 'radioMenu']) !!} <span class="label">Раздел портфолио:</span></h3>
 
@@ -110,8 +107,7 @@
               <span class="sublabel">Портфолио</span><br />
             </label>
             <div class="input-prepend">
-              {!! Form::select('filter_alias', $filters, (isset($option) && $option) ? $option :FALSE, ['placeholder' =>
-              'Не используется']) !!}
+              {!! Form::select('filter_alias', $filters, (isset($option) && $option) ? $option : FALSE, ['placeholder' => 'Не используется']) !!}
             </div>
           </li>
 
